@@ -3,6 +3,7 @@ import moment from "moment";
 import { Button, View } from "react-native";
 import { Agenda, CalendarList } from "react-native-calendars";
 import { Clock } from "./Clock";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 const _format = "YYYY-MM-DD";
 const _today = moment().format(_format);
@@ -13,26 +14,25 @@ const AppCalendar = ({ calendarAvailablilty = { ID: 13, Nm: "All" } }) => {
 
   const [markedDates, setMarkedDates] = useState({});
   const [showClock, setShowClock] = useState(false);
-  const [selectedDay, setTimeSelected] = useState();
+  // const [selectedDay, setTimeSelected] = useState();
+  const [time, setTime] = useState(new Date());
 
   const onDaySelect = (day) => {
-    // console.log("day:", day);
-    setTimeSelected(day);
-    setShowClock(true);
     const _selectedDay = moment(day.dateString).format(_format);
     let selected = true;
 
     // Already in marked dates, so reverse current marked state
     if (markedDates[_selectedDay]) {
       selected = !markedDates[_selectedDay].selected;
+    } else {
+      setShowClock(true);
     }
 
     // Create a new object using object property spread since it should be immutable
     // Reading: https://davidwalsh.name/merge-objects
-
     const updatedMarkedDates = {
       ...markedDates,
-      ...{ [_selectedDay]: { selected, selectedDay } },
+      ...{ [_selectedDay]: { selected, time } },
     };
     // Triggers component to render again, picking up the new state
     setMarkedDates(updatedMarkedDates);
@@ -47,6 +47,13 @@ const AppCalendar = ({ calendarAvailablilty = { ID: 13, Nm: "All" } }) => {
       dates[moment().add(i, "days").format(_format)] = { selected: true };
     }
     setMarkedDates(dates);
+  };
+
+  const onTimeSelect = (event, selectedTime) => {
+    console.log("selectedTime:", moment(selectedTime).format("HH:mm"));
+
+    setShowClock(Platform.OS === "ios");
+    setTime(moment(selectedTime).format("HH:mm"));
   };
 
   useEffect(() => {
@@ -77,10 +84,13 @@ const AppCalendar = ({ calendarAvailablilty = { ID: 13, Nm: "All" } }) => {
         }}
       />
       {showClock && (
-        <Clock
-          dateSelected={selectedDay}
-          setShowClock={(value) => setShowClock(value)}
-          setTimeSelected={(value) => setTimeSelected(value)}
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={new Date()}
+          mode={"time"}
+          is24Hour={false}
+          display="default"
+          onChange={onTimeSelect}
         />
       )}
     </View>
