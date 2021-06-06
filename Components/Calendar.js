@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import moment from "moment";
 import { Button, View } from "react-native";
-import { Agenda } from "react-native-calendars";
+import { Agenda, CalendarList } from "react-native-calendars";
+import { Clock } from "./Clock";
 
 const _format = "YYYY-MM-DD";
 const _today = moment().format(_format);
@@ -11,9 +12,13 @@ const AppCalendar = ({ calendarAvailablilty = { ID: 13, Nm: "All" } }) => {
   let allBlocked = calendarAvailablilty.ID > 11 ? false : true;
 
   const [markedDates, setMarkedDates] = useState({});
+  const [showClock, setShowClock] = useState(false);
+  const [selectedDay, setTimeSelected] = useState();
 
   const onDaySelect = (day) => {
-    console.log("day:", day);
+    // console.log("day:", day);
+    setTimeSelected(day);
+    setShowClock(true);
     const _selectedDay = moment(day.dateString).format(_format);
     let selected = true;
 
@@ -27,7 +32,7 @@ const AppCalendar = ({ calendarAvailablilty = { ID: 13, Nm: "All" } }) => {
 
     const updatedMarkedDates = {
       ...markedDates,
-      ...{ [_selectedDay]: { selected } },
+      ...{ [_selectedDay]: { selected, selectedDay } },
     };
     // Triggers component to render again, picking up the new state
     setMarkedDates(updatedMarkedDates);
@@ -53,23 +58,32 @@ const AppCalendar = ({ calendarAvailablilty = { ID: 13, Nm: "All" } }) => {
   }, []);
 
   return (
-    <Agenda
-      firstDay={6}
-      minDate={_today}
-      pastScrollRange={0}
-      futureScrollRange={12}
-      // onDayPress={onDaySelect}
-      onDayPress={(day) => {
-        console.log(`${day} pressed`);
-      }}
-      markedDates={markedDates}
-      theme={{
-        selectedDayBackgroundColor: allBlocked ? "blue" : "blue",
-        selectedDayTextColor: allBlocked ? "#ffffff" : "#d9e1e8",
-        dayTextColor: "#2d4150",
-        textDisabledColor: "#d9e1e8",
-      }}
-    />
+    <View>
+      <CalendarList
+        firstDay={6}
+        minDate={_today}
+        pastScrollRange={0}
+        futureScrollRange={12}
+        onDayPress={onDaySelect}
+        // onDayPress={(day) => {
+        //   setShowClock(true);
+        // }}
+        markedDates={markedDates}
+        theme={{
+          selectedDayBackgroundColor: allBlocked ? "blue" : "blue",
+          selectedDayTextColor: allBlocked ? "#ffffff" : "#d9e1e8",
+          dayTextColor: "#2d4150",
+          textDisabledColor: "#d9e1e8",
+        }}
+      />
+      {showClock && (
+        <Clock
+          dateSelected={selectedDay}
+          setShowClock={(value) => setShowClock(value)}
+          setTimeSelected={(value) => setTimeSelected(value)}
+        />
+      )}
+    </View>
   );
 };
 
