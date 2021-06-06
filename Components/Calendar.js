@@ -1,21 +1,27 @@
 import React, { useEffect, useState } from "react";
 import moment from "moment";
-import { Button, View } from "react-native";
-import { Agenda, CalendarList } from "react-native-calendars";
-import { Clock } from "./Clock";
+import { View } from "react-native";
+import { CalendarList } from "react-native-calendars";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
 const _format = "YYYY-MM-DD";
 const _today = moment().format(_format);
-const _tomorrow = moment().add(1, "days").format(_format);
-const _maxDate = moment().add(1, "years").format(_format);
+
 const AppCalendar = ({ calendarAvailablilty = { ID: 13, Nm: "All" } }) => {
   let allBlocked = calendarAvailablilty.ID > 11 ? false : true;
 
   const [markedDates, setMarkedDates] = useState({});
   const [showClock, setShowClock] = useState(false);
-  // const [selectedDay, setTimeSelected] = useState();
   const [time, setTime] = useState(new Date());
+
+  // A function to select available dates based on props
+  const availableDates = (number) => {
+    let dates = {};
+    for (let i = 0; i < number; i++) {
+      dates[moment().add(i, "days").format(_format)] = { selected: true };
+    }
+    setMarkedDates(dates);
+  };
 
   const onDaySelect = (day) => {
     const _selectedDay = moment(day.dateString).format(_format);
@@ -38,15 +44,6 @@ const AppCalendar = ({ calendarAvailablilty = { ID: 13, Nm: "All" } }) => {
     setMarkedDates(updatedMarkedDates);
 
     console.log("markedDates:", markedDates);
-  };
-
-  // A function to select available dates based on props
-  const availableDates = (number) => {
-    let dates = {};
-    for (let i = 0; i < number; i++) {
-      dates[moment().add(i, "days").format(_format)] = { selected: true };
-    }
-    setMarkedDates(dates);
   };
 
   const onTimeSelect = (event, selectedTime) => {
@@ -72,9 +69,6 @@ const AppCalendar = ({ calendarAvailablilty = { ID: 13, Nm: "All" } }) => {
         pastScrollRange={0}
         futureScrollRange={12}
         onDayPress={onDaySelect}
-        // onDayPress={(day) => {
-        //   setShowClock(true);
-        // }}
         markedDates={markedDates}
         theme={{
           selectedDayBackgroundColor: allBlocked ? "blue" : "blue",
