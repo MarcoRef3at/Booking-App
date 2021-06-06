@@ -3,6 +3,7 @@ import moment from "moment";
 import { View } from "react-native";
 import { CalendarList } from "react-native-calendars";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import microsoftApi from "./microsoftApi";
 
 const _format = "YYYY-MM-DD";
 const _today = moment().format(_format);
@@ -51,6 +52,35 @@ const AppCalendar = ({ calendarAvailablilty = { ID: 13, Nm: "All" } }) => {
 
     setShowClock(Platform.OS === "ios");
     setTime(moment(selectedTime).format("HH:mm"));
+
+    setTimeout(() => {
+      let host = "/events";
+
+      microsoftApi
+        .post(
+          host,
+          {
+            subject: "4444",
+            start: {
+              dateTime: "2021-06-8T11: 15:03.257Z",
+              timeZone: "UTC",
+            },
+            end: {
+              dateTime: "2021-06-9T11:15:04.257Z",
+              timeZone: "UTC",
+            },
+          }
+          // { withCredentials: true }
+        )
+
+        .then((response) => {
+          console.log("response:", response);
+        })
+
+        .catch((error) => {
+          console.log("error:", error);
+        });
+    }, 500);
   };
 
   useEffect(() => {
