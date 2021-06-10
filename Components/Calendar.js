@@ -8,7 +8,11 @@ import microsoftApi from "./Config/microsoftApi";
 const _format = "YYYY-MM-DD";
 const _today = moment().format(_format);
 
-const AppCalendar = ({ calendarAvailablilty = { ID: 13, Nm: "All" } }) => {
+const AppCalendar = ({
+  calendarAvailablilty = { ID: 13, Nm: "All" },
+  route: { params },
+}) => {
+  let calendarType = params.id;
   let allBlocked = calendarAvailablilty.ID > 11 ? false : true;
 
   const [markedDates, setMarkedDates] = useState({});
@@ -99,7 +103,7 @@ const AppCalendar = ({ calendarAvailablilty = { ID: 13, Nm: "All" } }) => {
         pastScrollRange={0}
         futureScrollRange={12}
         onDayPress={onDaySelect}
-        markedDates={markedDates}
+        markedDates={calendarType != 0 ? markedDates : null}
         theme={{
           selectedDayBackgroundColor: allBlocked ? "blue" : "blue",
           selectedDayTextColor: allBlocked ? "#ffffff" : "#d9e1e8",

@@ -5,18 +5,17 @@ import microsoftApi from "../Config/microsoftApi";
 import AppButton from "../Shared/Button";
 import defaultStyles from "./../Config/styles";
 import FormPicker from "./../Shared/FormPicker";
-const ScreenServices = ({ route: { params }, navigation: { navigate } }) => {
-  const [services, setServices] = useState([]);
-  const getServices = () => {
+
+const ScreenBusinesses = ({ navigation: { navigate } }) => {
+  const [businesses, setBusinesses] = useState([]);
+  const getBusinesses = () => {
     setTimeout(() => {
       microsoftApi
-        .get(
-          `${endPoints.ListBusinesses}/${params.id}${endPoints.ListServices}`
-        )
+        .get(endPoints.ListBusinesses)
 
         .then((response) => {
           console.log("response:", response.data.value);
-          setServices(response.data.value);
+          setBusinesses(response.data.value);
         })
 
         .catch((error) => {
@@ -27,17 +26,20 @@ const ScreenServices = ({ route: { params }, navigation: { navigate } }) => {
   };
 
   useEffect(() => {
-    getServices();
+    getBusinesses();
   }, []);
+
   return (
     <View>
       <FormPicker
-        header="Select Service"
-        data={services}
-        navigate={(id) => navigate("CalendarType", id)}
+        header={"Select Business"}
+        data={businesses}
+        navigate={(id) => navigate("Service", id)}
       />
     </View>
   );
 };
 
-export default ScreenServices;
+export default ScreenBusinesses;
+
+const styles = StyleSheet.create({});
