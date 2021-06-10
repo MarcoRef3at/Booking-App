@@ -3,7 +3,7 @@ import moment from "moment";
 import { View } from "react-native";
 import { CalendarList } from "react-native-calendars";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import microsoftApi from "./microsoftApi";
+import microsoftApi from "./Config/microsoftApi";
 
 const _format = "YYYY-MM-DD";
 const _today = moment().format(_format);
