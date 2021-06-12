@@ -14,7 +14,7 @@ const ScreenBusinesses = ({ navigation: { navigate } }) => {
         .get(endPoints.ListBusinesses)
 
         .then((response) => {
-          console.log("response:", response.data.value);
+          // console.log("response:", response.data.value);
           setBusinesses(response.data.value);
         })
 

@@ -1,24 +1,29 @@
 import React, { useEffect, useState } from "react";
 import moment from "moment";
 import { View } from "react-native";
-import { CalendarList } from "react-native-calendars";
+import { Calendar, CalendarList } from "react-native-calendars";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import microsoftApi from "./Config/microsoftApi";
+import AppButton from "./Shared/Button";
 
 const _format = "YYYY-MM-DD";
 const _today = moment().format(_format);
 
 const AppCalendar = ({
+  navigation: { navigate },
   calendarAvailablilty = { ID: 13, Nm: "All" },
   route: { params },
 }) => {
-  let calendarType = params.id;
+  const calendarType = params.calendarTypeId.id;
+  const { businessId } = params;
+  const { serviceId } = params;
+
   let allBlocked = calendarAvailablilty.ID > 11 ? false : true;
 
   const [markedDates, setMarkedDates] = useState({});
   const [showClock, setShowClock] = useState(false);
   const [time, setTime] = useState(new Date());
-
+  const [targetDate, setTargetDate] = useState(new Date());
   // A function to select available dates based on props
   const availableDates = (number) => {
     let dates = {};
@@ -29,6 +34,7 @@ const AppCalendar = ({
   };
 
   const onDaySelect = (day) => {
+    setTargetDate(new Date(day.timestamp));
     const _selectedDay = moment(day.dateString).format(_format);
     let selected = true;
 
@@ -40,10 +46,9 @@ const AppCalendar = ({
     }
 
     // Create a new object using object property spread since it should be immutable
-    // Reading: https://davidwalsh.name/merge-objects
     const updatedMarkedDates = {
       ...markedDates,
-      ...{ [_selectedDay]: { selected, time } },
+      ...{ [_selectedDay]: { selected } },
     };
     // Triggers component to render again, picking up the new state
     setMarkedDates(updatedMarkedDates);
@@ -52,39 +57,10 @@ const AppCalendar = ({
   };
 
   const onTimeSelect = (event, selectedTime) => {
-    console.log("selectedTime:", moment(selectedTime).format("HH:mm"));
+    console.log("selectedTime:", moment.utc(selectedTime + "+02:00"));
 
     setShowClock(Platform.OS === "ios");
-    setTime(moment(selectedTime).format("HH:mm"));
-
-    setTimeout(() => {
-      let host = "/events";
-
-      microsoftApi
-        .post(
-          host,
-          {
-            subject: "4444",
-            start: {
-              dateTime: "2021-06-8T11: 15:03.257Z",
-              timeZone: "UTC",
-            },
-            end: {
-              dateTime: "2021-06-9T11:15:04.257Z",
-              timeZone: "UTC",
-            },
-          }
-          // { withCredentials: true }
-        )
-
-        .then((response) => {
-          console.log("response:", response);
-        })
-
-        .catch((error) => {
-          console.log("error:", error);
-        });
-    }, 500);
+    setTime(moment(selectedTime));
   };
 
   useEffect(() => {
@@ -97,7 +73,7 @@ const AppCalendar = ({
 
   return (
     <View>
-      <CalendarList
+      <Calendar
         firstDay={6}
         minDate={_today}
         pastScrollRange={0}
@@ -114,13 +90,20 @@ const AppCalendar = ({
       {showClock && (
         <DateTimePicker
           testID="dateTimePicker"
-          value={new Date()}
+          value={targetDate}
           mode={"time"}
           is24Hour={false}
           display="default"
           onChange={onTimeSelect}
         />
       )}
+      <AppButton
+        title="next"
+        onPress={() => {
+          console.log("markedDates:", markedDates);
+          navigate("Details", { time, businessId, serviceId });
+        }}
+      />
     </View>
   );
 };

@@ -17,6 +17,7 @@ const FormPicker = ({ header, data, navigate }) => {
           <AppButton
             title={item.displayName}
             onPress={() => {
+              // console.log("item:", item);
               navigate({ id: item.id });
             }}
           />

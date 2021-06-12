@@ -14,7 +14,7 @@ const AppNavigator = () => (
       options={{
         tabBarIcon: ({ color, size }) => (
           <MaterialCommunityIcons
-            name="barcode-scan"
+            name="calendar-clock"
             color={color}
             size={size}
           />
