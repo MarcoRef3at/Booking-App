@@ -21,7 +21,7 @@ const AppNavigator = () => (
         ),
       }}
     />
-    <Tab.Screen
+    {/* <Tab.Screen
       name="Settings"
       component={SettingsNavigator}
       options={{
@@ -29,7 +29,7 @@ const AppNavigator = () => (
           <Feather name="settings" size={size} color={color} />
         ),
       }}
-    />
+    /> */}
   </Tab.Navigator>
 );
 

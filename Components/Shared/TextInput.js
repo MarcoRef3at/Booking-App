@@ -2,13 +2,22 @@ import React from "react";
 import { View, TextInput, StyleSheet } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-function AppTextInput({ icon, width = "100%", ...otherProps }) {
+function AppTextInput({
+  icon,
+  multiline = false,
+  width = "100%",
+  ...otherProps
+}) {
   return (
     <View style={[styles.container, { width }]}>
       {icon && (
         <MaterialCommunityIcons name={icon} size={30} style={styles.icon} />
       )}
-      <TextInput style={styles.textInput} {...otherProps} />
+      <TextInput
+        multiline={multiline}
+        style={[styles.textInput]}
+        {...otherProps}
+      />
     </View>
   );
 }

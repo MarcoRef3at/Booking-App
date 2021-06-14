@@ -19,7 +19,7 @@ const ScreenDetails = ({ route: { params } }) => {
     customerEmailAddress = "TestEmail@email.com",
     customerPhone = "Test Phone",
     customerNotes = "Test Notes",
-    start = time,
+    startTime = time,
     end
   ) => {
     setTimeout(() => {
@@ -38,12 +38,12 @@ const ScreenDetails = ({ route: { params } }) => {
             serviceId: serviceId,
             start: {
               "@odata.type": "#microsoft.graph.dateTimeTimeZone",
-              dateTime: start,
+              dateTime: startTime,
               timeZone: "UTC",
             },
             end: {
               "@odata.type": "#microsoft.graph.dateTimeTimeZone",
-              dateTime: start,
+              dateTime: startTime,
               timeZone: "UTC",
             },
           }
@@ -79,6 +79,13 @@ const ScreenDetails = ({ route: { params } }) => {
         value={phone}
         setValue={(x) => setPhone(x)}
         icon="phone"
+      />
+      <FormField
+        placeholder="Notes"
+        value={notes}
+        setValue={(x) => setNotes(x)}
+        icon="note"
+        multiline={true}
       />
 
       <AppButton
