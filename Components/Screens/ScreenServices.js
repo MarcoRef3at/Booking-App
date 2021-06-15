@@ -16,7 +16,7 @@ const ScreenServices = ({ route: { params }, navigation: { navigate } }) => {
         )
 
         .then((response) => {
-          // console.log("response:", response.data.value);
+          console.log("response:", response.data.value);
           setServices(response.data.value);
         })
 

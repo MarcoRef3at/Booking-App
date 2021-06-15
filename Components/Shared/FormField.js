@@ -1,9 +1,16 @@
 import React from "react";
 import AppTextInput from "./TextInput";
+import { View } from "react-native";
 
-function FormField({ value, width = "100%", setValue, ...otherProps }) {
+function FormField({ value, width = "90%", setValue, ...otherProps }) {
   return (
-    <>
+    <View
+      style={{
+        paddingHorizotal: 10,
+        alignContent: "center",
+        alignItems: "center",
+      }}
+    >
       <AppTextInput
         value={value}
         onBlur={() => {
@@ -15,7 +22,7 @@ function FormField({ value, width = "100%", setValue, ...otherProps }) {
         width={width}
         {...otherProps}
       />
-    </>
+    </View>
   );
 }
 

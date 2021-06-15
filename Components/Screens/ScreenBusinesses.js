@@ -14,8 +14,17 @@ const ScreenBusinesses = ({ navigation: { navigate } }) => {
         .get(endPoints.ListBusinesses)
 
         .then((response) => {
-          // console.log("response:", response.data.value);
-          setBusinesses(response.data.value);
+          console.log("response:", response);
+          let res = response.data.value;
+          let values = [];
+          res.map(
+            (v) =>
+              v.displayName != "dfef" &&
+              v.displayName != "El Gouna Squash" &&
+              values.push(v)
+          );
+          setBusinesses(values);
+          // setBusinesses(response.data.value);
         })
 
         .catch((error) => {

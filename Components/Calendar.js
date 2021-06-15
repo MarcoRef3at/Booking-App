@@ -61,6 +61,8 @@ const AppCalendar = ({
 
     setShowClock(Platform.OS === "ios");
     setTime(moment(selectedTime));
+    params.calendarTypeId.id == 0 &&
+      navigate("Details", { time, businessId, serviceId });
   };
 
   useEffect(() => {
@@ -97,13 +99,15 @@ const AppCalendar = ({
           onChange={onTimeSelect}
         />
       )}
-      <AppButton
-        title="next"
-        onPress={() => {
-          console.log("markedDates:", markedDates);
-          navigate("Details", { time, businessId, serviceId });
-        }}
-      />
+      {params.calendarTypeId.id != 0 && (
+        <AppButton
+          title="next"
+          onPress={() => {
+            console.log("markedDates:", markedDates);
+            navigate("Details", { time, businessId, serviceId });
+          }}
+        />
+      )}
     </View>
   );
 };

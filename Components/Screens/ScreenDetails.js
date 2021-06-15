@@ -4,11 +4,10 @@ import microsoftApi from "../Config/microsoftApi";
 import AppButton from "./../Shared/Button";
 import FormField from "./../Shared/FormField";
 
-const ScreenDetails = ({ route: { params } }) => {
+const ScreenDetails = ({ route: { params }, navigation: { navigate } }) => {
   const { businessId } = params;
   const { serviceId } = params;
   const { time } = params;
-
   const [Name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
