@@ -9,6 +9,15 @@ const Tab = createBottomTabNavigator();
 const AppNavigator = () => (
   <Tab.Navigator>
     <Tab.Screen
+      name="Test"
+      component={SettingsNavigator}
+      options={{
+        tabBarIcon: ({ color, size }) => (
+          <Feather name="settings" size={size} color={color} />
+        ),
+      }}
+    />
+    <Tab.Screen
       name="Booking"
       component={BookingNavigator}
       options={{
@@ -21,15 +30,6 @@ const AppNavigator = () => (
         ),
       }}
     />
-    {/* <Tab.Screen
-      name="Test"
-      component={SettingsNavigator}
-      options={{
-        tabBarIcon: ({ color, size }) => (
-          <Feather name="settings" size={size} color={color} />
-        ),
-      }}
-    /> */}
   </Tab.Navigator>
 );
 

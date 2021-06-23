@@ -70,6 +70,7 @@ export default class TimeTable extends Component {
   };
 
   onEventPress = (evt) => {
+    console.log("evt:", evt);
     Alert.alert("onEventPress", JSON.stringify(evt));
   };
 
@@ -85,7 +86,7 @@ export default class TimeTable extends Component {
             numberOfDays={this.numOfDays}
             onEventPress={this.onEventPress}
             headerStyle={styles.headerStyle}
-            formatDateHeader="dddd"
+            formatDateHeader="D MMM"
             locale="eg"
           />
         </View>
