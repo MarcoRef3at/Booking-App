@@ -8,6 +8,7 @@ const ScreenDetails = ({ route: { params }, navigation: { navigate } }) => {
   const { businessId } = params;
   const { serviceId } = params;
   const { time } = params;
+  const { dates } = params;
   const [Name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -23,41 +24,77 @@ const ScreenDetails = ({ route: { params }, navigation: { navigate } }) => {
   ) => {
     setTimeout(() => {
       let host = `bookingBusinesses/${businessId}/appointments`;
+      if (dates.length > 1) {
+        dates.map((d) => {
+          microsoftApi
+            .post(
+              host,
 
-      microsoftApi
-        .post(
-          host,
+              {
+                "@odata.type": "#microsoft.graph.bookingAppointment",
+                customerEmailAddress: customerEmailAddress,
+                customerName: customerName,
+                customerNotes: customerNotes,
+                customerPhone: customerPhone,
+                serviceId: serviceId,
+                start: {
+                  "@odata.type": "#microsoft.graph.dateTimeTimeZone",
+                  dateTime: d,
+                  timeZone: "UTC",
+                },
+                end: {
+                  "@odata.type": "#microsoft.graph.dateTimeTimeZone",
+                  dateTime: d,
+                  timeZone: "UTC",
+                },
+              }
+            )
+            .then((response) => {
+              // console.log("response:", response);
+            })
 
-          {
-            "@odata.type": "#microsoft.graph.bookingAppointment",
-            customerEmailAddress: customerEmailAddress,
-            customerName: customerName,
-            customerNotes: customerNotes,
-            customerPhone: customerPhone,
-            serviceId: serviceId,
-            start: {
-              "@odata.type": "#microsoft.graph.dateTimeTimeZone",
-              dateTime: startTime,
-              timeZone: "UTC",
-            },
-            end: {
-              "@odata.type": "#microsoft.graph.dateTimeTimeZone",
-              dateTime: startTime,
-              timeZone: "UTC",
-            },
-          }
-        )
-
-        .then((response) => {
-          //   console.log("response:", response);
-        })
-
-        .catch((error) => {
-          let Error = error.response.data.error.message;
-          console.log("Error:", error.response);
-          Alert.alert("Error", Error);
+            .catch((error) => {
+              let Error = error.response.data.error.message;
+              console.log("Error:", error.response);
+              Alert.alert("Error", Error);
+            });
         });
-    }, 500);
+      } else {
+        microsoftApi
+          .post(
+            host,
+
+            {
+              "@odata.type": "#microsoft.graph.bookingAppointment",
+              customerEmailAddress: customerEmailAddress,
+              customerName: customerName,
+              customerNotes: customerNotes,
+              customerPhone: customerPhone,
+              serviceId: serviceId,
+              start: {
+                "@odata.type": "#microsoft.graph.dateTimeTimeZone",
+                dateTime: startTime,
+                timeZone: "UTC",
+              },
+              end: {
+                "@odata.type": "#microsoft.graph.dateTimeTimeZone",
+                dateTime: startTime,
+                timeZone: "UTC",
+              },
+            }
+          )
+
+          .then((response) => {
+            //   console.log("response:", response);
+          })
+
+          .catch((error) => {
+            let Error = error.response.data.error.message;
+            console.log("Error:", error.response);
+            Alert.alert("Error", Error);
+          });
+      }
+    }, 1000);
   };
   return (
     <View>

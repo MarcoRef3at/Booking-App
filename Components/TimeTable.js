@@ -88,6 +88,11 @@ export default class TimeTable extends Component {
             headerStyle={styles.headerStyle}
             formatDateHeader="D MMM"
             locale="eg"
+            onGridClick={(x, y, z) => {
+              console.log("x:", x);
+              console.log("y:", y);
+              console.log("z:", z);
+            }}
           />
         </View>
       </SafeAreaView>

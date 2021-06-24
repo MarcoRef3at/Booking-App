@@ -8,7 +8,7 @@ import SettingsNavigator from "./SettingsNavigator";
 const Tab = createBottomTabNavigator();
 const AppNavigator = () => (
   <Tab.Navigator>
-    <Tab.Screen
+    {/* <Tab.Screen
       name="Test"
       component={SettingsNavigator}
       options={{
@@ -16,7 +16,7 @@ const AppNavigator = () => (
           <Feather name="settings" size={size} color={color} />
         ),
       }}
-    />
+    /> */}
     <Tab.Screen
       name="Booking"
       component={BookingNavigator}

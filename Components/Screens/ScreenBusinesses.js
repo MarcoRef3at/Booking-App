@@ -9,6 +9,7 @@ import FormPicker from "./../Shared/FormPicker";
 const ScreenBusinesses = ({ navigation: { navigate } }) => {
   const [businesses, setBusinesses] = useState([]);
   const getBusinesses = () => {
+    console.log("getting businesses");
     setTimeout(() => {
       microsoftApi
         .get(endPoints.ListBusinesses)
@@ -30,8 +31,9 @@ const ScreenBusinesses = ({ navigation: { navigate } }) => {
         .catch((error) => {
           console.log("error:", error.response.data.error.message);
           Alert.alert("Error", error.response.data.error.message);
-        });
-    }, 500);
+        })
+        .finally(() => console.log("Got Businesses"));
+    }, 1000);
   };
 
   useEffect(() => {
