@@ -9,7 +9,7 @@ import WeekViews from "./../WeekView";
 const Stack = createStackNavigator();
 const SettingsNavigator = () => (
   <Stack.Navigator screenOptions={{ headerShown: true }}>
-    <Stack.Screen name="Payment" component={AppCalendar} />
+    <Stack.Screen name="Payment" component={WeekViews} />
   </Stack.Navigator>
 );
 
