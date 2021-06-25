@@ -24,6 +24,7 @@ const ScreenDetails = ({ route: { params }, navigation: { navigate } }) => {
   ) => {
     setTimeout(() => {
       let host = `bookingBusinesses/${businessId}/appointments`;
+      // for period
       if (dates.length > 1) {
         dates.map((d) => {
           microsoftApi
@@ -47,6 +48,10 @@ const ScreenDetails = ({ route: { params }, navigation: { navigate } }) => {
                   dateTime: d,
                   timeZone: "UTC",
                 },
+              },
+              {
+                onUploadProgress: (progress) =>
+                  console.log((progress.loaded / progress.total) * 100, `%`),
               }
             )
             .then((response) => {
@@ -81,6 +86,10 @@ const ScreenDetails = ({ route: { params }, navigation: { navigate } }) => {
                 dateTime: startTime,
                 timeZone: "UTC",
               },
+            },
+            {
+              onUploadProgress: (progress) =>
+                console.log((progress.loaded / progress.total) * 100, `%`),
             }
           )
 
