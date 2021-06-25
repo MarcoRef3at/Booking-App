@@ -5,28 +5,22 @@ import microsoftApi from "../Config/microsoftApi";
 import AppButton from "../Shared/Button";
 import defaultStyles from "./../Config/styles";
 import FormPicker from "./../Shared/FormPicker";
+import ActivityIndicator from "./../Shared/ActivityIndicator";
+import servicesApi from "../api/servicesApi";
 const ScreenServices = ({ route: { params }, navigation: { navigate } }) => {
   const [services, setServices] = useState([]);
+  const [loading, setLoading] = useState(false);
   const businessId = params.id;
+
   const getServices = () => {
-    setTimeout(() => {
-      microsoftApi
-        .get(
-          `${endPoints.ListBusinesses}/${businessId}${endPoints.ListServices}`
-        )
-
-        .then((response) => {
-          console.log("response:", response.data);
-          setServices(response.data.value);
-        })
-
-        .catch((error) => {
-          let Error = error.response.data.error.message;
-          console.log("Error:", Error);
-          Alert.alert("Error", Error);
-          Error == "The specified folder could not be found in the store";
-        });
-    }, 500);
+    setLoading(true);
+    servicesApi
+      .loadServices(businessId)
+      .then((values) => {
+        setServices(values);
+      })
+      .catch((err) => console.log("err:", err));
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -41,6 +35,7 @@ const ScreenServices = ({ route: { params }, navigation: { navigate } }) => {
           navigate("CalendarType", { serviceId, businessId });
         }}
       />
+      <ActivityIndicator visible={loading} />
     </View>
   );
 };
