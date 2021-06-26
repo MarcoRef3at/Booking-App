@@ -31,6 +31,7 @@
     "react-native-gesture-handler": "^1.10.3",
     "react-native-navigation": "^7.16.0",
     "react-native-paymob-accept": "0.0.22",
+    "react-native-progress": "^4.1.2",
     "react-native-screens": "^3.3.0",
     "react-native-timetable": "^1.0.4",
     "react-native-web": "~0.13.12",

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View, Alert } from "react-native";
+import bookApi from "../api/bookApi";
 import microsoftApi from "../Config/microsoftApi";
 import AppButton from "./../Shared/Button";
 import FormField from "./../Shared/FormField";
@@ -27,81 +28,28 @@ const ScreenDetails = ({ route: { params }, navigation: { navigate } }) => {
       // for period
       if (dates.length > 1) {
         dates.map((d) => {
-          microsoftApi
-            .post(
-              host,
-
-              {
-                "@odata.type": "#microsoft.graph.bookingAppointment",
-                customerEmailAddress: customerEmailAddress,
-                customerName: customerName,
-                customerNotes: customerNotes,
-                customerPhone: customerPhone,
-                serviceId: serviceId,
-                start: {
-                  "@odata.type": "#microsoft.graph.dateTimeTimeZone",
-                  dateTime: d,
-                  timeZone: "UTC",
-                },
-                end: {
-                  "@odata.type": "#microsoft.graph.dateTimeTimeZone",
-                  dateTime: d,
-                  timeZone: "UTC",
-                },
-              },
-              {
-                onUploadProgress: (progress) =>
-                  console.log((progress.loaded / progress.total) * 100, `%`),
-              }
-            )
-            .then((response) => {
-              // console.log("response:", response);
-            })
-
-            .catch((error) => {
-              let Error = error.response.data.error.message;
-              console.log("Error:", error.response);
-              Alert.alert("Error", Error);
-            });
+          bookApi.bookAppointment(
+            businessId,
+            customerEmailAddress,
+            customerName,
+            customerNotes,
+            customerPhone,
+            serviceId,
+            d,
+            d
+          );
         });
       } else {
-        microsoftApi
-          .post(
-            host,
-
-            {
-              "@odata.type": "#microsoft.graph.bookingAppointment",
-              customerEmailAddress: customerEmailAddress,
-              customerName: customerName,
-              customerNotes: customerNotes,
-              customerPhone: customerPhone,
-              serviceId: serviceId,
-              start: {
-                "@odata.type": "#microsoft.graph.dateTimeTimeZone",
-                dateTime: startTime,
-                timeZone: "UTC",
-              },
-              end: {
-                "@odata.type": "#microsoft.graph.dateTimeTimeZone",
-                dateTime: startTime,
-                timeZone: "UTC",
-              },
-            },
-            {
-              onUploadProgress: (progress) =>
-                console.log((progress.loaded / progress.total) * 100, `%`),
-            }
-          )
-
-          .then((response) => {
-            //   console.log("response:", response);
-          })
-
-          .catch((error) => {
-            let Error = error.response.data.error.message;
-            console.log("Error:", error.response);
-            Alert.alert("Error", Error);
-          });
+        bookApi.bookAppointment(
+          businessId,
+          customerEmailAddress,
+          customerName,
+          customerNotes,
+          customerPhone,
+          serviceId,
+          startTime,
+          startTime
+        );
       }
     }, 1000);
   };
