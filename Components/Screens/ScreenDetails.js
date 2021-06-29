@@ -4,6 +4,7 @@ import bookApi from "../api/bookApi";
 import microsoftApi from "../Config/microsoftApi";
 import AppButton from "./../Shared/Button";
 import FormField from "./../Shared/FormField";
+import ScreenProgress from "./ScreenProgress";
 
 const ScreenDetails = ({ route: { params }, navigation: { navigate } }) => {
   const { businessId } = params;
@@ -14,6 +15,8 @@ const ScreenDetails = ({ route: { params }, navigation: { navigate } }) => {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [notes, setNotes] = useState("");
+  const [progress, setProgress] = useState(0);
+  const [showProgress, setShowProgress] = useState(false);
 
   const postAppointment = (
     customerName = "Test Name",
@@ -23,38 +26,39 @@ const ScreenDetails = ({ route: { params }, navigation: { navigate } }) => {
     startTime = time,
     end
   ) => {
-    setTimeout(() => {
-      let host = `bookingBusinesses/${businessId}/appointments`;
-      // for period
-      if (dates.length > 1) {
-        dates.map((d) => {
-          bookApi.bookAppointment(
-            businessId,
-            customerEmailAddress,
-            customerName,
-            customerNotes,
-            customerPhone,
-            serviceId,
-            d,
-            d
-          );
-        });
-      } else {
-        bookApi.bookAppointment(
-          businessId,
-          customerEmailAddress,
-          customerName,
-          customerNotes,
-          customerPhone,
-          serviceId,
-          startTime,
-          startTime
-        );
-      }
-    }, 1000);
+    const book = (date) => {
+      bookApi.bookAppointment(
+        businessId,
+        customerEmailAddress,
+        customerName,
+        customerNotes,
+        customerPhone,
+        serviceId,
+        date,
+        date
+      );
+    };
+    setProgress(0);
+    setShowProgress(true);
+    // for period
+    if (dates.length > 1) {
+      dates.map((date) => {
+        book(date);
+        setProgress(progress + 1 / dates.length);
+      });
+    } else {
+      book(startTime);
+    }
+    setProgress(1);
+    // setShowProgress(false);
   };
   return (
     <View>
+      <ScreenProgress
+        onDone={() => navigate("Business")}
+        visible={showProgress}
+        progress={progress}
+      />
       <FormField
         placeholder="Name"
         value={Name}
