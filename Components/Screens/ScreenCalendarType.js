@@ -10,7 +10,6 @@ const ScreenCalendarType = ({
   const calendarTypes = [
     { id: 0, displayName: "Single Day" },
     { id: 1, displayName: "Period of days with same time" },
-    { id: 2, displayName: "Multiple Days with different Time" },
   ];
   return (
     <View>
