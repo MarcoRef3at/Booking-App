@@ -125,7 +125,7 @@ const AppCalendar = ({
         futureScrollRange={12}
         onDayPress={calendarType == 0 ? onDaySelect : onPeriodSelect}
         markedDates={markedDates}
-        markingType={calendarType == 1 ? "period" : "simple"}
+        markingType={calendarType == 1 ? "period" : "custom"}
       />
       {showClock && (
         <DateTimePicker
