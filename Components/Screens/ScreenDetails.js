@@ -80,13 +80,6 @@ const ScreenDetails = ({ route: { params }, navigation: { navigate } }) => {
         setValue={(x) => setPhone(x)}
         icon="phone"
       />
-      <FormField
-        placeholder="Notes"
-        value={notes}
-        setValue={(x) => setNotes(x)}
-        icon="note"
-        multiline={true}
-      />
 
       <AppButton
         title="Next"

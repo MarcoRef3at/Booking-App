@@ -11,19 +11,22 @@ const defaultStyles = {
   },
   textHeader: {
     color: colors.dark,
-    fontSize: 30,
+    fontSize: 25,
+    padding: 10,
     fontFamily: Platform.OS === "android" ? "Roboto" : "Avenir",
     fontWeight: "bold",
   },
   textHeader2: {
     color: colors.dark,
     fontSize: 25,
+    padding: 10,
     fontFamily: Platform.OS === "android" ? "Roboto" : "Avenir",
     fontWeight: "bold",
     paddingVertical: 10,
   },
   textHeader3: {
     color: colors.dark,
+    padding: 10,
     fontSize: 18,
     fontFamily: Platform.OS === "android" ? "Roboto" : "Avenir",
     fontWeight: "bold",

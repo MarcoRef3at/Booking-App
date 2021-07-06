@@ -5,6 +5,8 @@ import AppButton from "./../Shared/Button";
 import FormField from "./../Shared/FormField";
 import ScreenProgress from "./ScreenProgress";
 import { moment } from "moment";
+import AppText from "./../Shared/Text";
+import defaultStyles from "./../Config/styles";
 
 const ScreenBook = ({ route: { params }, navigation: { navigate } }) => {
   console.log("params:", params);
@@ -56,12 +58,33 @@ const ScreenBook = ({ route: { params }, navigation: { navigate } }) => {
   };
   return (
     <View>
-      <Text>businessName:{businessName}</Text>
-      <Text>serviceName:{serviceName}</Text>
-      {dates.map((date) => (
-        <Text>{date.format("DD-MMM-YYYY")}</Text>
-      ))}
-      <Text>time:{time.format("hh:mm a")}</Text>
+      <AppText style={[defaultStyles.textHeader]}>
+        {Name ? `${Name} is` : "You are"} about to book
+      </AppText>
+      <AppText style={[defaultStyles.textHeader3]}>
+        {serviceName} in {businessName}
+      </AppText>
+      <AppText style={[defaultStyles.textHeader3]}>During The Period :</AppText>
+
+      <AppText style={[defaultStyles.textHeader3]}>
+        {dates.length > 1 ? "From" : "On"} {dates[0].format("DD-MMM-YYYY")}
+      </AppText>
+      {dates.length > 1 && (
+        <AppText style={[defaultStyles.textHeader3]}>
+          To : {dates[dates.length - 1].format("DD-MMM-YYYY")}
+        </AppText>
+      )}
+
+      <AppText style={[defaultStyles.textHeader3]}>
+        At {time.format("hh:mm a")}
+      </AppText>
+
+      <AppText style={[defaultStyles.textHeader2]}>
+        Review Your Contacts Before Submit
+      </AppText>
+
+      <AppText style={[defaultStyles.textHeader3]}>Email : {email}</AppText>
+      <AppText style={[defaultStyles.textHeader3]}>Phone : {phone}</AppText>
 
       <AppButton
         title="Book"
