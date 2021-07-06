@@ -16,7 +16,9 @@ const AppCalendar = ({
 }) => {
   const calendarType = params.calendarTypeId.id; // 0 -> single Day , 1-> period , 2->multiple
   const { businessId } = params;
+  const { businessName } = params;
   const { serviceId } = params;
+  const { serviceName } = params;
 
   const [markedDates, setMarkedDates] = useState({});
   const [showClock, setShowClock] = useState(false);
@@ -65,7 +67,14 @@ const AppCalendar = ({
     });
 
     selectedTime != null &&
-      navigate("Details", { time: formatTime, dates, businessId, serviceId });
+      navigate("Details", {
+        time: formatTime,
+        dates,
+        businessId,
+        serviceId,
+        businessName,
+        serviceName,
+      });
   };
 
   const onPeriodSelect = (day) => {

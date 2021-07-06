@@ -6,6 +6,7 @@ import ScreenCalendarType from "./../Screens/ScreenCalendarType";
 import AppCalendar from "./../Calendar";
 import ScreenDetails from "./../Screens/ScreenDetails";
 import ScreenPayment from "./../Screens/ScreenPayment";
+import ScreenBook from "./../Screens/ScreenBook";
 
 const Stack = createStackNavigator();
 const BookingNavigator = () => (
@@ -16,6 +17,7 @@ const BookingNavigator = () => (
     <Stack.Screen name="Calendar" component={AppCalendar} />
     <Stack.Screen name="Details" component={ScreenDetails} />
     <Stack.Screen name="Payment" component={ScreenPayment} />
+    <Stack.Screen name="Book" component={ScreenBook} />
   </Stack.Navigator>
 );
 

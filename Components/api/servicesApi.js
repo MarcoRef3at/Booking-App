@@ -7,7 +7,7 @@ const loadServices = (businessId) => {
       .get(`${endPoints.ListBusinesses}/${businessId}${endPoints.ListServices}`)
 
       .then((response) => {
-        console.log("response:", response.data);
+        // console.log("response:", response.data);
         resolve(response.data.value);
       })
 

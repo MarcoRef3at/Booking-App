@@ -4,23 +4,22 @@ import bookApi from "../api/bookApi";
 import AppButton from "./../Shared/Button";
 import FormField from "./../Shared/FormField";
 import ScreenProgress from "./ScreenProgress";
+import { moment } from "moment";
 
-LogBox.ignoreLogs([
-  "Non-serializable values were found in the navigation state",
-]);
-
-const ScreenDetails = ({ route: { params }, navigation: { navigate } }) => {
+const ScreenBook = ({ route: { params }, navigation: { navigate } }) => {
+  console.log("params:", params);
   const { businessId } = params;
+  const { businessName } = params;
   const { serviceId } = params;
+  const { serviceName } = params;
   const { time } = params;
   const { dates } = params;
-  const [Name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [notes, setNotes] = useState("");
+  const { Name } = params;
+  const { email } = params;
+  const { phone } = params;
+
   const [progress, setProgress] = useState(0);
   const [showProgress, setShowProgress] = useState(false);
-
   const postAppointment = (
     customerName = "Test Name",
     customerEmailAddress = "TestEmail@email.com",
@@ -57,45 +56,27 @@ const ScreenDetails = ({ route: { params }, navigation: { navigate } }) => {
   };
   return (
     <View>
+      <Text>businessName:{businessName}</Text>
+      <Text>serviceName:{serviceName}</Text>
+      {dates.map((date) => (
+        <Text>{date.format("DD-MMM-YYYY")}</Text>
+      ))}
+      <Text>time:{time.format("hh:mm a")}</Text>
+
+      <AppButton
+        title="Book"
+        onPress={() => postAppointment(Name, email, phone)}
+      />
+
       <ScreenProgress
         onDone={() => navigate("Business")}
         visible={showProgress}
         progress={progress}
       />
-      <FormField
-        placeholder="Name"
-        value={Name}
-        setValue={(x) => setName(x)}
-        icon="account"
-      />
-      <FormField
-        placeholder="Email"
-        value={email}
-        setValue={(x) => setEmail(x)}
-        icon="email"
-      />
-      <FormField
-        placeholder="Phone"
-        value={phone}
-        setValue={(x) => setPhone(x)}
-        icon="phone"
-      />
-      <FormField
-        placeholder="Notes"
-        value={notes}
-        setValue={(x) => setNotes(x)}
-        icon="note"
-        multiline={true}
-      />
-
-      <AppButton
-        title="Next"
-        onPress={() => navigate("Book", { ...params, Name, email, phone })}
-      />
     </View>
   );
 };
 
-export default ScreenDetails;
+export default ScreenBook;
 
 const styles = StyleSheet.create({});

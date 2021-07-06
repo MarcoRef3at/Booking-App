@@ -46,8 +46,8 @@ const FormPicker = ({ header, data, navigate, title = null, images }) => {
               imageUrl={images[item.id]}
               thumbnailUrl={images[item.id]}
               onPress={() => {
-                console.log("item:", item);
-                navigate({ id: item.id });
+                // console.log("item:", item);
+                navigate({ id: item.id, name: item.displayName });
               }}
             />
           ) : (

@@ -19,8 +19,10 @@ const ScreenCalendarType = ({
         navigate={(id) =>
           navigate("Calendar", {
             serviceId: params.serviceId.id,
+            serviceName: params.serviceId.name,
             calendarTypeId: id,
             businessId: params.businessId,
+            businessName: params.businessName,
           })
         }
       />

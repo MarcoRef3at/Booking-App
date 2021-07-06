@@ -11,7 +11,7 @@ const ScreenServices = ({ route: { params }, navigation: { navigate } }) => {
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(false);
   const businessId = params.id;
-  console.log("businessId:", businessId);
+  const businessName = params.name;
   const getServices = () => {
     setLoading(true);
     servicesApi
@@ -44,7 +44,7 @@ const ScreenServices = ({ route: { params }, navigation: { navigate } }) => {
         header="Select Service"
         data={services}
         navigate={(serviceId) => {
-          navigate("CalendarType", { serviceId, businessId });
+          navigate("CalendarType", { serviceId, businessId, businessName });
         }}
       />
       <ActivityIndicator visible={loading} />
